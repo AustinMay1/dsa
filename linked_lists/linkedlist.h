@@ -116,3 +116,50 @@ struct Node *search_rec(struct Node *p, int key) {
 
     return p->data == key ? p : search_rec(p->next, key);
 }
+
+void insert_at(struct Node *p, int index, int x) {
+    struct Node *t;
+
+    if(index < 0 || index > list_length(p)) {
+        return;
+    }
+
+    t=(struct Node *)malloc(sizeof(struct Node));
+    t->data = x;
+
+    if(index == 0) {
+        t->next = first;
+        first = t;
+    } else {
+        for(int i = 0; i < index - 1; i++) {
+            p = p->next;
+        }
+        t->next = p->next;
+        p->next = t;
+    }
+}
+
+void sorted_insert(struct Node *p, int x) {
+    struct Node *t, *q = NULL;
+
+    t=(struct Node *)malloc(sizeof(struct Node));
+    t->data=x;
+    t->next=NULL;
+
+    if(first == NULL) {
+        first = t;
+    } else {
+        while(p && p->data < x) {
+            q = p;
+            p = p->next;
+
+        }
+        if(p == first) {
+            t->next = first;
+            first = t;
+        } else {
+            t->next = q->next;
+            q->next = t;
+        }
+    }
+}

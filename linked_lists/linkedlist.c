@@ -13,5 +13,13 @@ int main(void) {
 
     struct Node *p = search_list(first, 6);
     printf("Found:       %d\n", p->data);
+
+    insert_at(first, 1, 3);
+    display_list(first);
+
+    sorted_insert(first, 5);
+    printf("Insert 5 (sorted): ");
+    display_list(first);
+
     return 0;
 }
