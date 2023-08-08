@@ -41,7 +41,6 @@ void create_list_snd(int A[], int n) {
   }
 }
 
-
 void display_list(struct Node *p) {
   while (p != NULL) {
     printf("%d ", p->data);
@@ -209,117 +208,136 @@ int list_delete(struct Node *p, int index) {
 }
 
 int is_sorted(struct Node *p) {
-    int x = INT_MIN;
+  int x = INT_MIN;
 
-    while(p != NULL) {
-        if(p->data < x) {
-            return 0;
-        }
-
-        x = p->data;
-        p = p->next;
+  while (p != NULL) {
+    if (p->data < x) {
+      return 0;
     }
 
-    return 1;
+    x = p->data;
+    p = p->next;
+  }
+
+  return 1;
 }
 
 void remove_dupes(struct Node *p) {
-    struct Node *q = p->next;
+  struct Node *q = p->next;
 
-    while(q != NULL) {
-        if(p->data != q->data) {
-            p = q;
-            q = p->next;
-        } else {
-            p->next = q->next;
-            free(q);
-            q = p->next;
-        }
+  while (q != NULL) {
+    if (p->data != q->data) {
+      p = q;
+      q = p->next;
+    } else {
+      p->next = q->next;
+      free(q);
+      q = p->next;
     }
-} // Linked List must be sorted 
+  }
+} // Linked List must be sorted
 
 void reverse_list(struct Node *p) {
-    int i = 0;
-    int *A; 
-    struct Node *q = p;
+  int i = 0;
+  int *A;
+  struct Node *q = p;
 
-    A=(int *)malloc(sizeof(int) * list_length(p));
+  A = (int *)malloc(sizeof(int) * list_length(p));
 
-    while(q != NULL) {
-        A[i] = q->data;
-        q = q->next;
-        i++;
-    } 
-    
-    q = p;
+  while (q != NULL) {
+    A[i] = q->data;
+    q = q->next;
+    i++;
+  }
+
+  q = p;
+  i--;
+
+  while (q != NULL) {
+    q->data = A[i];
+    q = q->next;
     i--;
-
-    while(q != NULL) {
-        q->data = A[i];
-        q = q->next;
-        i--;
-    }
+  }
 } // using array, reversing the data
 
 void reverse_list_pointers(struct Node *p) {
-    struct Node *q = NULL, *r = NULL;
-    
-    while(p != NULL) {
-        r = q;
-        q = p;
-        p = p->next;
-        q->next = r;
-    }
+  struct Node *q = NULL, *r = NULL;
 
-    first = q;
+  while (p != NULL) {
+    r = q;
+    q = p;
+    p = p->next;
+    q->next = r;
+  }
+
+  first = q;
 } // using sliding pointers
 
 void reverse_list_rec(struct Node *q, struct Node *p) {
-    if(p) {
-        reverse_list_rec(p, p->next);
-        p->next = q;
-    } else {
-        first = q;
-    }
+  if (p) {
+    reverse_list_rec(p, p->next);
+    p->next = q;
+  } else {
+    first = q;
+  }
 } // recursive
 
-void concate(struct Node *p, struct Node *q){
-    thd = p;    
+void concate(struct Node *p, struct Node *q) {
+  thd = p;
 
-    while(p->next != NULL) {
-        p = p->next;
-    }
+  while (p->next != NULL) {
+    p = p->next;
+  }
 
-    p->next = q;
+  p->next = q;
 }
 
 void merge(struct Node *p, struct Node *q) {
-    struct Node *last;
+  struct Node *last;
 
-    if(p->data < q->data) {
-        thd = last = p;
-        p = p->next;
-        thd->next = NULL;
+  if (p->data < q->data) {
+    thd = last = p;
+    p = p->next;
+    thd->next = NULL;
+  } else {
+    thd = last = q;
+    q = q->next;
+    thd->next = NULL;
+  }
+
+  while (p && q) {
+    if (p->data < q->data) {
+      last->next = p;
+      last = p;
+      p = p->next;
+      last->next = NULL;
     } else {
-        thd = last = q;
+      last->next = q;
+      last = q;
+      q = q->next;
+      last->next = NULL;
+    }
+  }
+
+  if (p)
+    last->next = p;
+  if (q)
+    last->next = q;
+}
+
+int has_loop(struct Node *f) {
+    struct Node *p, *q;
+    p = q = f;
+
+    do {
+        p = p->next;
         q = q->next;
-        thd->next = NULL;
-    }
+        q = q ? q->next : q;
+    } while (p && q && p != q);
 
-    while (p && q) {
-        if(p->data < q->data) {
-            last->next = p;
-            last = p;
-            p = p->next;
-            last->next = NULL;
-        } else {
-            last->next = q;
-            last = q;
-            q = q->next;
-            last->next = NULL;
-        }
+    if (p == q) {
+        return 1;
+    } else {
+        return 0;
     }
-
-    if(p) last->next = p;
-    if(q) last->next = q;
 }

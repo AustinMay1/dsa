@@ -1,21 +1,20 @@
 #include "linkedlist.h"
 
 int main(void) {
+    /* struct Node *t1, *t2; */
+
     int A[] = {2,4,6,8,10};
-    int B[] = {1,7,9};
     create_list(A, 5);
-    create_list_snd(B, 3);
 
     printf("List 1: ");
     display_list(first);
 
-    printf("List 2: ");
-    display_list(snd);
+    /* t1 = first->next->next; */
+    /* t2 = first->next->next->next->next; */
+    /* t2->next = t1; */
 
-    merge(first, snd);
-    printf("Merged Lists: ");
-    display_rec(thd);
-    
+    /* printf("Loop: %d\n", has_loop(first)); */
+
     printf("List Length: %d\n",list_length(first));
     printf("List Sum:    %d\n",list_sum(first));
     printf("Max E:       %d\n", max_rec(first));
