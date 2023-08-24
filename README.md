@@ -3,8 +3,8 @@
 - [x] Abstract Data Types
 - [x] Arrays
 - [] Matrices
-- [] Linked Lists (Single, Double, Circular)
-- [] Stacks
+- [x] Linked Lists (Single, TODO: Double, Circular)
+- [x] Stacks
 - [] Queues
 - [] Trees
 - [] Graphs
